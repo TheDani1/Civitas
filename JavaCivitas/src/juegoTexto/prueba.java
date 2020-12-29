@@ -5,17 +5,7 @@
  */
 package juegoTexto;
 import civitas.CivitasJuego;
-import civitas.Diario;
-import civitas.OperacionesJuego;
-import civitas.SalidasCarcel;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import civitas.Casilla;
-import civitas.GestionesInmobiliarias;
-import civitas.Jugador;
-import civitas.Respuestas;
-import civitas.TituloPropiedad;
 import civitas.Dado;
 
 public class prueba {

@@ -138,5 +138,6 @@ public class VistaTextual {
   void actualizarVista(){
 
       juegoModel.getJugadorActual().toString();
+      System.out.println(juegoModel.getCasillaActual());
   } 
 }
