@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="JavaCivitas">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/JavaCivitas.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
