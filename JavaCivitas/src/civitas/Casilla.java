@@ -17,7 +17,7 @@ public class Casilla {
 
     public void informe(int actual, ArrayList<Jugador> todos){
 
-        Diario.getInstance().ocurreEvento("El jugador "+String.valueOf(actual)+ " ha caido en "+this.toString());
+        Diario.getInstance().ocurreEvento("\n[DIARIO] El jugador "+String.valueOf(actual)+ " ha caido en "+this.toString());
 
     }
 
@@ -39,7 +39,7 @@ public class Casilla {
     @Override
     public String toString(){
 
-        return "[Casilla] -> "+ nombre + "\n[Tipo] -> Descanso\n";
+        return "\n[Casilla] -> "+ nombre + "\n[Tipo] -> Descanso\n";
     }
     
     public String getNombre(){

@@ -11,7 +11,6 @@ public class Tablero {
     
     private int numCasillaCarcel;
     private ArrayList<Casilla> casillas;
-    //private ArrayList<Casilla> casillas;
     private int porSalida;
     private Boolean tieneJuez;
     
@@ -93,7 +92,7 @@ public class Tablero {
     void añadeJuez(){
         
         if(!tieneJuez) {
-            casillas.add(new Casilla("Juez"));
+            casillas.add(new CasillaJuez(numCasillaCarcel,"Juez") );
             tieneJuez = true;
         }
         

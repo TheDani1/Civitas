@@ -253,7 +253,7 @@ module Civitas
 
     def comprar(titulo)
 
-      result = false;
+      result = false
 
       if !@encarcelado && @puede_comprar
 

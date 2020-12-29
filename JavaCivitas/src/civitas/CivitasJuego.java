@@ -7,20 +7,12 @@ package civitas;
 import java.util.ArrayList;
 
 public class CivitasJuego {
-    
-    //solo se ponen los que salen no los que la flecha termina en la clase
+
     private int indiceJugadorActual;
-    
-    //relacion a jugador
     private ArrayList<Jugador> jugadores;
-    //relacion Estados juegos
     private EstadosJuego estado;
-    //relacion GestorEstados
     private GestorEstados gestorEstados;
-    //relacion a Tablero
     private Tablero tablero = new Tablero(6);
-    //private Tablero tablero;
-    //relacion MAZOSORPRESAS
     private MazoSorpresas mazo;
     
     
@@ -57,7 +49,7 @@ public class CivitasJuego {
         }
         jugadores = players;
         gestorEstados = new GestorEstados();
-        estado = EstadosJuego.INICIO_TURNO;
+        estado = gestorEstados.estadoInicial();
         indiceJugadorActual = Dado.getInstance().quienEmpieza(nombres.size()-1);
         mazo = new MazoSorpresas(true);
         inicializarMazoSorpresas(tablero);
@@ -263,13 +255,14 @@ public class CivitasJuego {
     public OperacionesJuego siguientePaso(){
        Jugador jugadorActual = jugadores.get(indiceJugadorActual);
        OperacionesJuego operacion = gestorEstados.operacionesPermitidas(jugadorActual, estado);
+
        if(operacion == OperacionesJuego.PASAR_TURNO){
-           this.pasarTurno();
-           this.siguientePasoCompletado(operacion);
+           pasarTurno();
+           siguientePasoCompletado(operacion);
        }
        if(operacion == OperacionesJuego.AVANZAR){
-           this.avanzaJugador();
-           this.siguientePasoCompletado(operacion);
+           avanzaJugador();
+           siguientePasoCompletado(operacion);
        }
        contabilizarPasosPorSalida(jugadorActual);
        return operacion;
@@ -277,7 +270,7 @@ public class CivitasJuego {
     
     public void siguientePasoCompletado(OperacionesJuego operacion){
         Jugador jugador = jugadores.get(indiceJugadorActual);
-        gestorEstados.siguienteEstado(jugador,estado,operacion);
+        estado = gestorEstados.siguienteEstado(jugador,estado,operacion);
     }
     
     public boolean vender(int ip ){

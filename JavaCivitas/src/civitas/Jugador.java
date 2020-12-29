@@ -12,10 +12,8 @@ import java.util.ArrayList;
  */
 public class Jugador implements Comparable<Jugador> {
     
-    private ArrayList<TituloPropiedad> propiedades = new ArrayList<>();
-    
-    //solo se ponen los que salen no los que la flecha termina en la clase
-    //private TituloPropiedad propietario;
+    private ArrayList<TituloPropiedad> propiedades;
+
     protected Sorpresa salvoconducto;
     
     static protected int CasasMax = 4;
@@ -25,10 +23,10 @@ public class Jugador implements Comparable<Jugador> {
     static protected float PrecioLibertad = 200;
     
     protected boolean encarcelado = false;
-    private String nombre = "";
-    private int numCasillaActual = 1;
-    private boolean puedeComprar = true;
-    protected float saldo = 0f;
+    private String nombre;
+    private int numCasillaActual;
+    private boolean puedeComprar;
+    protected float saldo;
     
     static private float SaldoInicial=7500f;
     
@@ -43,7 +41,7 @@ public class Jugador implements Comparable<Jugador> {
             float cantidad = propiedad.getImporteCancelarHipoteca();
             boolean puedoGastar = puedoGastar(cantidad);
             if(puedoGastar){
-                Diario.getInstance().ocurreEvento("El jugador "+nombre+ "cancela la hipoteca de la propiedad "+ip);
+                Diario.getInstance().ocurreEvento("\n[DIARIO] El jugador "+nombre+ "cancela la hipoteca de la propiedad "+ip);
                 cancelar = propiedad.cancelarHipoteca(this);
             }
             if(cancelar && propiedad.getHipotecado()){
@@ -80,6 +78,7 @@ public class Jugador implements Comparable<Jugador> {
         }
         if (puedeComprar) {
             float precio = titulo.getPrecioCompra();
+
             if (puedoGastar(precio)) {
 
                 result = titulo.comprar(this);
@@ -87,11 +86,11 @@ public class Jugador implements Comparable<Jugador> {
                 if (result) {
 
                     propiedades.add(titulo);
-                    Diario.getInstance().ocurreEvento("Jugador " + this + " ha comprado la propiedad " + titulo.toString());
+                    Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador " + this + " ha comprado la propiedad " + titulo.toString());
 
                 }
 
-                puedeComprar = false;
+                //puedeComprar = false;
             }
         }
         return result;
@@ -109,7 +108,7 @@ public class Jugador implements Comparable<Jugador> {
                 if(this.puedoGastar(precio) && propiedad.getNumCasas() <= getCasasMax() && edificarCasa){
                     construir = propiedad.construirCasa(this);
                     if(construir){
-                        Diario.getInstance().ocurreEvento("Jugador "+nombre +" construye una casa en la propiedad "+ip);
+                        Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre +" construye una casa en la propiedad "+ip);
                     }
                 }
             }
@@ -136,7 +135,7 @@ public class Jugador implements Comparable<Jugador> {
                     propiedad.derruirCasas(casasPorHotel, this);
                 }
                 if(construir){
-                        Diario.getInstance().ocurreEvento("Jugador "+nombre +" construye una casa en la propiedad "+ip);
+                        Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre +" construye una casa en la propiedad "+ip);
                     }
             }
         }
@@ -152,7 +151,7 @@ public class Jugador implements Comparable<Jugador> {
                 envioCarcel=true;
             }else{
                 perderSalvoConducto();
-                Diario.getInstance().ocurreEvento("Jugador "+nombre+ " pierde salvoconducto y sale de la carcel");
+                Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ " pierde salvoconducto y sale de la carcel");
                 envioCarcel = false;
             }
         }
@@ -171,18 +170,14 @@ public class Jugador implements Comparable<Jugador> {
         if(debeSerEncarcelado()){
             moverACasilla(numCasillaCarcel);
             encarcelado = true;
-            Diario.getInstance().ocurreEvento("Jugador "+nombre+ " ha sido enviado a la carcel.");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ " ha sido enviado a la carcel.");
         }
         return encarcelado;
     }
     
     
     private boolean existeLaPropiedad(int ip){
-        if(propiedades.contains(propiedades.get(ip))){
-            return true;
-        }else{
-            return false;
-        }
+        return (ip >= 0 && ip < propiedades.size() );
     }
     
     
@@ -228,24 +223,26 @@ public class Jugador implements Comparable<Jugador> {
     
     boolean hipotecar(int ip){
         boolean result = false;
-        
+
         if(encarcelado){
+
             return result;
+
         }
+
         if(existeLaPropiedad(ip)){
-                TituloPropiedad propiedad = propiedades.get(ip);
-                result= propiedad.hipotecar(this);
-                
-        }else{
+
             TituloPropiedad propiedad = propiedades.get(ip);
-            if(!propiedad.getHipotecado() && propiedad.esEsteElPropietario(propiedad.getPropietario())){
-                result = propiedad.hipotecar(this);
-                
-            }
+            result = propiedad.hipotecar(this);
+
         }
+
         if(result){
-            Diario.getInstance().ocurreEvento("Jugador "+nombre+ " ha hipotecado la propiedad "+ip);
+
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ " ha hipotecado la propiedad "+ip);
+
         }
+
         return result;
     }
     
@@ -258,6 +255,11 @@ public class Jugador implements Comparable<Jugador> {
 
         this.nombre=nombre;
         this.saldo += SaldoInicial;
+        encarcelado=false;
+        numCasillaActual=0;
+        puedeComprar=true;
+        propiedades= new ArrayList<TituloPropiedad>();
+        salvoconducto=null;
 
     }
 
@@ -274,15 +276,14 @@ public class Jugador implements Comparable<Jugador> {
     
     boolean modificarSaldo(float cantidad){
         saldo +=cantidad;
-        Diario.getInstance().ocurreEvento("Jugador "+nombre+ "ha modificado el saldo "+String.valueOf(cantidad));
+        Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ "ha modificado el saldo "+String.valueOf(cantidad));
         return true;
     }
     
     boolean moverACasilla(int numCasilla){
-        if(!isEncarcelado()){
+        if(!encarcelado){
             numCasillaActual = numCasilla;
-            puedeComprar=false;
-            Diario.getInstance().ocurreEvento("\nJugador "+nombre+ " se ha movido a la casilla "+String.valueOf(numCasilla));
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ " se ha movido a la casilla "+String.valueOf(numCasilla));
             return true;
         }else{
             return false;
@@ -322,7 +323,7 @@ public class Jugador implements Comparable<Jugador> {
     }
     
     boolean pasaPorSalida(){
-        Diario.getInstance().ocurreEvento("Jugador "+nombre+ " ha pasado por la casilla de salida, aumenta su saldo en "+PasoPorSalida);
+        Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ " ha pasado por la casilla de salida, aumenta su saldo en "+PasoPorSalida);
         return modificarSaldo(PasoPorSalida);
     }
     
@@ -332,7 +333,7 @@ public class Jugador implements Comparable<Jugador> {
     }
     
     boolean puedeComprarCasilla(){
-        if(!isEncarcelado()){
+        if(!encarcelado){
             return true;
         }else{
             return false;
@@ -376,7 +377,7 @@ public class Jugador implements Comparable<Jugador> {
         if(isEncarcelado() && puedeSalirCarcelPagando()){
             paga(PrecioLibertad);
             encarcelado=false;
-            Diario.getInstance().ocurreEvento("Jugador "+nombre+ " sale de la carcel pagando");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+ " sale de la carcel pagando");
             return true;
         }else{
             return false;
@@ -386,7 +387,7 @@ public class Jugador implements Comparable<Jugador> {
     boolean salirCarcelTirando(){
         if(Dado.getInstance().salgoDeLaCarcel()){
             encarcelado=false;
-            Diario.getInstance().ocurreEvento("Jugador "+nombre+" sale de la carcel tirando los dados");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+" sale de la carcel tirando los dados");
             return true;
         }else{
             return false;
@@ -411,7 +412,7 @@ public class Jugador implements Comparable<Jugador> {
     
     @Override
     public String toString(){
-        String cadenaString = "-----------["+ nombre +"]------------\n[Saldo] -> "+ saldo +"\n[Encarcelado] -> "+encarcelado+"\n[Numero de casilla actual] -> "+numCasillaActual+"\n";
+        String cadenaString = "\n-----------["+ nombre +"]------------\n[Saldo] -> "+ saldo +"\n[Encarcelado] -> "+encarcelado+"\n[Numero de casilla actual] -> "+numCasillaActual+"\n";
         return cadenaString;
     }
     
@@ -420,7 +421,7 @@ public class Jugador implements Comparable<Jugador> {
             if(existeLaPropiedad(ip)){
                 if(propiedades.get(ip).vender(this)){
                     propiedades.remove(ip);
-                    Diario.getInstance().ocurreEvento("Jugador "+nombre+" ha vendido la propiedad "+String.valueOf(ip));
+                    Diario.getInstance().ocurreEvento("\n[DIARIO] Jugador "+nombre+" ha vendido la propiedad "+String.valueOf(ip));
                     return true;
                 }else{
                     return false;

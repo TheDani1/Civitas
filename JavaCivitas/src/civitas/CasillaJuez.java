@@ -27,7 +27,7 @@ public class CasillaJuez extends Casilla{
     @Override
     public String toString(){
 
-        return "[Casilla] -> " + super.getNombre() +"\n[Tipo] -> Juez\n[Carcel] -> " + carcel +"\n";
+        return "\n[Casilla] -> " + super.getNombre() +"\n[Tipo] -> Juez\n[Carcel] -> " + carcel +"\n";
 
     }
 

@@ -75,7 +75,7 @@ public class VistaTextual {
   }
 
   SalidasCarcel salirCarcel() {
-    int opcion = menu ("Elige la forma para intentar salir de la carcel", new ArrayList<> (Arrays.asList("Pagando","Tirando el dado")));
+    int opcion = menu ("\nElige la forma para intentar salir de la carcel", new ArrayList<> (Arrays.asList("Pagando","Tirando el dado")));
     return (SalidasCarcel.values()[opcion]);
   }
 
@@ -85,7 +85,7 @@ public class VistaTextual {
     lista.add("SI");
     lista.add("NO");
 
-    int eleccion=menu("¿Desea comprar la calle a la que ha llegado?",lista);
+    int eleccion=menu("\n¿Desea comprar la calle a la que ha llegado?",lista);
     if(eleccion == 0){
 
       return Respuestas.SI;
@@ -131,7 +131,7 @@ public class VistaTextual {
   
   public void setCivitasJuego(CivitasJuego civitas){ 
         juegoModel=civitas;
-        this.actualizarVista();
+        //this.actualizarVista();
 
     }
   

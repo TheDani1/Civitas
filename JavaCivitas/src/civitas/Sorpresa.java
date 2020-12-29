@@ -29,7 +29,7 @@ abstract public class Sorpresa {
     }
 
     protected void informe(int actual, ArrayList <Jugador> todos){
-        Diario.getInstance().ocurreEvento("Se ha aplicado una sorpresa al jugador"+todos.get(actual).getNombre()+"\n");
+        Diario.getInstance().ocurreEvento("\n[DIARIO] Se ha aplicado una sorpresa al jugador"+todos.get(actual).getNombre()+"\n");
     }
     
     abstract void aplicarAJugador(int actual, ArrayList <Jugador> todos);

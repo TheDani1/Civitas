@@ -58,11 +58,11 @@ public class Dado {
         
         if (d){
             debug = true;
-            Diario.getInstance().ocurreEvento("\nDebug esta activado");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Debug esta activado");
         }
         else {
             debug = false;
-            Diario.getInstance().ocurreEvento("\nDebug esta desactivado");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Debug esta desactivado");
 
         }
         

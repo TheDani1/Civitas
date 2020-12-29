@@ -60,7 +60,7 @@ public class JugadorEspeculador extends Jugador{
             if(tieneSalvoconducto()){
 
                 perderSalvoConducto();
-                Diario.getInstance().ocurreEvento("El jugador "+ getNombre() +" ha usado SALVOCONDUCTO");
+                Diario.getInstance().ocurreEvento("\n[DIARIO] El jugador "+ getNombre() +" ha usado SALVOCONDUCTO");
                 return false;
             }else{
 

@@ -16,7 +16,7 @@ public class CasillaImpuesto extends Casilla{
     @Override
     public String toString(){
 
-        return "[Casilla] -> " + super.getNombre() +"\n[Tipo] -> Impuesto\n[Importe] -> " + importe + "\n";
+        return "\n[Casilla] -> " + super.getNombre() +"\n[Tipo] -> Impuesto\n[Importe] -> " + importe + "\n";
 
     }
 

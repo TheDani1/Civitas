@@ -32,7 +32,7 @@ public class MazoSorpresas {
         debug = debugger;
         init();
         if(debugger){
-            Diario.getInstance().ocurreEvento("Modo DEBUG activado");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Modo DEBUG activado");
         }
         
     }
@@ -72,7 +72,7 @@ public class MazoSorpresas {
         if(cartasEspeciales.contains(sorpresa)){
             sorpresas.add(sorpresa);
             cartasEspeciales.remove(sorpresa);
-            Diario.getInstance().ocurreEvento("Carta especial inhabilitada.");
+            Diario.getInstance().ocurreEvento("\n[DIARIO]Carta especial inhabilitada.");
         }
     }
     
@@ -80,7 +80,7 @@ public class MazoSorpresas {
         if(cartasEspeciales.contains(sorpresa)){
             sorpresas.add(sorpresa);
             cartasEspeciales.remove(sorpresa);
-            Diario.getInstance().ocurreEvento("Carta especial habilitada.");
+            Diario.getInstance().ocurreEvento("\n[DIARIO] Carta especial habilitada.");
             
         }
     }
